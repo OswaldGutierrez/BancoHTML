@@ -15,6 +15,50 @@
         <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/styles.css" rel="stylesheet" />
+
+        <!-- SCRIPTS-->
+        <script>
+            function enviarFormulario(event) {
+                event.preventDefault(); // Evita el envío tradicional del formulario
+
+                // Obtener los valores de los campos de entrada
+                const nombre = document.getElementById('fieldName').value;
+                const edad = parseInt(document.getElementById('fieldAge').value);
+                const correo = document.getElementById('fieldCorreo').value;
+                const contrasena = document.getElementById('fieldContrasena').value;
+
+                // Crear el objeto JSON
+                const data = {
+                    nombre: nombre,
+                    edad: edad,
+                    correo: correo,
+                    contrasena: contrasena
+                };
+
+                console.log('Datos a enviar:', data);
+
+                // Enviar los datos al servidor usando fetch
+                fetch('http://localhost:8080/registro', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                        .then(response => {
+                            console.log('Estado de la respuesta:', response.status);
+                            return response.text();
+                        })
+                        .then(data => {
+                            alert(data);
+                            console.log('Respuesta del servidor:', data);
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+            }
+        </script>
+
     </head>
 
     <body id="page-top">
@@ -55,6 +99,67 @@
                     variedad de servicios y operaciones diseñados para satisfacer todas tus necesidades financieras.</p>
             </div>
         </header>
+
+        <!-- Contact Section-->
+        <section class="page-section" id="contact">
+            <div class="container">
+                <!-- Contact Section Heading-->
+                <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Asignación de cuentas</h2>
+                <!-- Icon Divider-->
+                <div class="divider-custom">
+                    <div class="divider-custom-line"></div>
+                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                    <div class="divider-custom-line"></div>
+                </div>
+                <!-- Contact Section Form-->
+                <div class="row justify-content-center">
+                    <div class="col-lg-8 col-xl-7">
+                        <!-- * * * * * * * * * * * * * * *-->
+                        <!-- * * SB Forms Contact Form * *-->
+                        <!-- * * * * * * * * * * * * * * *-->
+                        <!-- This form is pre-integrated with SB Forms.-->
+                        <!-- To make this form functional, sign up at-->
+                        <!-- https://startbootstrap.com/solution/contact-forms-->
+                        <!-- to get an API token!-->
+
+                        <!-- <form id="contactForm" data-sb-form-api-token="API_TOKEN">-->
+                        <form id="contactForm" onsubmit="enviarFormulario(event)">
+
+                            <!-- Nombre input-->
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="fieldName" type="text" placeholder="Ingresa tu nombre" data-sb-validations="required" />
+                                <label for="fieldName">Nombre</label>
+                                <div class="invalid-feedback" data-sb-feedback="name:required">Se requiere un nombre</div>
+                            </div>
+
+                            <!-- Edad input-->
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="fieldAge" type="number" placeholder="19" data-sb-validations="required, age" />
+                                <label for="fieldAge">Edad</label>
+                                <div class="invalid-feedback" data-sb-feedback="age:required">Se requiere edad</div>
+                            </div>
+
+                            <!-- Correo input-->
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="fieldCorreo" type="tel" placeholder="davidguti@gmail.com" data-sb-validations="required, correo" />
+                                <label for="fieldCorreo">Correo</label>
+                                <div class="invalid-feedback" data-sb-feedback="correo:required">Se requiere correo</div>
+                            </div>
+
+                            <!-- Contrasena input-->
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="fieldContrasena" type="text" placeholder="123456" data-sb-validations="required, Contrasena" />
+                                <label for="fieldContrasena">Contraseña</label>
+                                <div class="invalid-feedback" data-sb-feedback="contrasena:required">Se requiere Contraseña</div>
+                            </div>
+
+                            <button class="btn btn-primary btn-xl" id="submitButton" type="submit">CREAR USUARIO</button>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <!-- Portfolio Section-->
         <section class="page-section portfolio" id="portfolio">
@@ -151,83 +256,9 @@
                 </div>
             </div>
         </section>
-        
-        
-        <!-- Contact Section-->
-        <section class="page-section" id="contact">
-            <div class="container">
-                <!-- Contact Section Heading-->
-                <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Asignación de cuentas</h2>
-                <!-- Icon Divider-->
-                <div class="divider-custom">
-                    <div class="divider-custom-line"></div>
-                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                    <div class="divider-custom-line"></div>
-                </div>
-                <!-- Contact Section Form-->
-                <div class="row justify-content-center">
-                    <div class="col-lg-8 col-xl-7">
-                        <!-- * * * * * * * * * * * * * * *-->
-                        <!-- * * SB Forms Contact Form * *-->
-                        <!-- * * * * * * * * * * * * * * *-->
-                        <!-- This form is pre-integrated with SB Forms.-->
-                        <!-- To make this form functional, sign up at-->
-                        <!-- https://startbootstrap.com/solution/contact-forms-->
-                        <!-- to get an API token!-->
-                        <form id="contactForm" data-sb-form-api-token="API_TOKEN">
-                            
-                            <!-- Nombre input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="fieldName" type="text" placeholder="Ingresa tu nombre" data-sb-validations="required" />
-                                <label for="name">Nombre</label>
-                                <div class="invalid-feedback" data-sb-feedback="name:required">Se requiere un nombre</div>
-                            </div>
-                            
-                            <!-- Edad input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="fieldAge" type="text" placeholder="19" data-sb-validations="required, age" />
-                                <label for="age">Edad</label>
-                                <div class="invalid-feedback" data-sb-feedback="datef:required">Se requiere edad</div>
-                            </div>
-                            
-                            <!-- Correo input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="fieldCorreo" type="tel" placeholder="davidguti@gmail.com" data-sb-validations="required, correo" />
-                                <label for="ID">Correo</label>
-                                <div class="invalid-feedback" data-sb-feedback="ID:required">Se requiere correo</div>
-                            </div>
-                            
-                            <!-- Contrasena input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="fieldContrasena" type="text" placeholder="123456" data-sb-validations="required, Contrasena" />
-                                <label for="Contrasena">Contraseña</label>
-                                <div class="invalid-feedback" data-sb-feedback="datef:required">Se requiere Contraseña</div>
-                            </div>
-                            
-                            <!-- Submit success message-->
-                            <!---->
-                            <!-- This is what your users will see when the form-->
-                            <!-- has successfully submitted-->
-                            <div class="d-none" id="submitSuccessMessage">
-                                <div class="text-center mb-3">
-                                    <div class="fw-bolder">Form submission successful!</div>
-                                    To activate this form, sign up at
-                                    <br />
-                                    <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
-                                </div>
-                            </div>
-                            <!-- Submit error message-->
-                            <!---->
-                            <!-- This is what your users will see when there is-->
-                            <!-- an error submitting the form-->
-                            <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
-                            <!-- Submit Button-->
-                            <button class="btn btn-primary btn-xl disabled" id="submitButton" type="submit">Send</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </section>
+
+
+
         <!-- Footer-->
         <footer class="footer text-center">
             <div class="container">
