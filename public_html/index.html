@@ -57,6 +57,42 @@
                             console.error('Error:', error);
                         });
             }
+            
+            function enviarLogin(event) {
+                event.preventDefault(); // Evita el envío tradicional del formulario
+
+                // Obtener los valores de los campos de entrada
+                const correo = document.getElementById('fieldCorreo').value;
+                const contrasena = document.getElementById('fieldContrasena').value;
+
+                // Crear el objeto JSON
+                const data = {
+                    correo: correo,
+                    contrasena: contrasena
+                };
+
+                console.log('Datos a enviar:', data);
+
+                // Enviar los datos al servidor usando fetch
+                fetch('http://localhost:8080/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                        .then(response => {
+                            console.log('Estado de la respuesta:', response.status);
+                            return response.text();
+                        })
+                        .then(data => {
+                            alert(data);
+                            console.log('Respuesta del servidor:', data);
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+            }
         </script>
     </head>
 
@@ -155,6 +191,18 @@
                                 <div class="invalid-feedback" data-sb-feedback="contrasena:required">Se requiere Contraseña</div>
                             </div>
 
+                            <!-- Tipo de cuenta input -->
+                            <div class="form-floating mb-3">
+                                <select class="form-control" id="fieldCuenta" data-sb-validations="required">
+                                    <option value="" disabled selected>Selecciona el tipo de cuenta</option>
+                                    <option value="ahorros">Ahorros</option>
+                                    <option value="corriente">Corriente</option>
+                                    <option value="suprema">Suprema</option>
+                                </select>
+                                <label for="fieldCuenta">Tipo de cuenta</label>
+                                <div class="invalid-feedback" data-sb-feedback="cuenta:required">Se requiere seleccionar un tipo de cuenta</div>
+                            </div>
+
                             <button class="btn btn-primary btn-xl" id="submitButton" type="submit">CREAR USUARIO</button>
 
                         </form>
@@ -213,21 +261,21 @@
                         <!-- https://startbootstrap.com/solution/contact-forms-->
                         <!-- to get an API token!-->
 
-                            <!-- Correo-Login input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="loginCorreo" type="tel" placeholder="@gmail.com" data-sb-validations="required, correo" />
-                                <label for="loginCorreo">Ingrese su correo</label>
-                                <div class="invalid-feedback" data-sb-feedback="correo:required">Se requiere correo</div>
-                            </div>
+                        <!-- Correo-Login input-->
+                        <div class="form-floating mb-3">
+                            <input class="form-control" id="loginCorreo" type="tel" placeholder="@gmail.com" data-sb-validations="required, correo" />
+                            <label for="loginCorreo">Ingrese su correo</label>
+                            <div class="invalid-feedback" data-sb-feedback="correo:required">Se requiere correo</div>
+                        </div>
 
-                            <!-- Contrasena-Login input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="loginContrasena" type="text" placeholder="987456" data-sb-validations="required, Contrasena" />
-                                <label for="loginContrasena">Ingrese su contraseña</label>
-                                <div class="invalid-feedback" data-sb-feedback="contrasena:required">Se requiere Contraseña</div>
-                            </div>
-                            
-                            <button class="btn btn-primary btn-xl" id="logginButton" type="submit">INGRESAR</button>
+                        <!-- Contrasena-Login input-->
+                        <div class="form-floating mb-3">
+                            <input class="form-control" id="loginContrasena" type="text" placeholder="987456" data-sb-validations="required, Contrasena" />
+                            <label for="loginContrasena">Ingrese su contraseña</label>
+                            <div class="invalid-feedback" data-sb-feedback="contrasena:required">Se requiere Contraseña</div>
+                        </div>
+
+                        <button class="btn btn-primary btn-xl" id="logginButton" type="submit">INGRESAR</button>
 
                         </form>
                     </div>
@@ -235,9 +283,9 @@
             </div>
         </section>
 
-        
-        
-        
+
+
+
         <!-- Footer-->
         <footer class="footer text-center">
             <div class="container">

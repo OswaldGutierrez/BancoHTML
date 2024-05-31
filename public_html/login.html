@@ -1,36 +1,95 @@
+<!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>login</title>
-        
-        <link href="css/login.css" rel="stylesheet" />
-    </head>
-    
-    <body>
-        <div class="formularioLogin">
-            <h1>Inicio de sesión</h1>
-            <form method="post">
-                <div class="username">
-                    <input type="text" required>
-                    <label>Correo electrónico</label>
-                </div>
-                
-                <div class="username">
-                    <input type="password" required>
-                    <label>Contraseña</label>
-                </div>
-                
-                <div class="recordar">¿Olvidó su contraseña?</div>
-                <input type="submit" value="Iniciar">
-                <div class="registrarse">
-                    Quiero hacer el <a href="index.html">registro</a>
-                </div>
-            </form>
-        </div>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>login</title>
 
-    </body>
+    <link href="css/login.css" rel="stylesheet" />
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            function enviarLogin(event) {
+                event.preventDefault(); // Evita el envío tradicional del formulario
+
+                // Obtener los valores de los campos de entrada
+                const correo = document.getElementById('fieldCorreo').value;
+                const contrasena = document.getElementById('fieldContrasena').value;
+
+                // Crear el objeto JSON
+                const data = {
+                    correo: correo,
+                    contrasena: contrasena
+                };
+
+                console.log('Datos a enviar:', data);
+
+                // Enviar los datos al servidor usando fetch
+                fetch('http://localhost:8080/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => {
+                    console.log('Estado de la respuesta:', response.status);
+                    return response.text().then(text => {
+                        return {status: response.status, text: text};
+                    });
+                })
+                .then(response => {
+                    const responseMessage = document.getElementById('responseMessage');
+                    if (response.status === 200) {
+                        responseMessage.style.color = 'green';
+                        responseMessage.textContent = response.text;
+                        console.log('Respuesta del servidor:', response.text);
+                        // Redirigir a banco.html
+                        window.location.href = 'banco.html';
+                    } else {
+                        responseMessage.style.color = 'red';
+                        responseMessage.textContent = response.text;
+                        console.log('Respuesta del servidor:', response.text);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    const responseMessage = document.getElementById('responseMessage');
+                    responseMessage.style.color = 'red';
+                    responseMessage.textContent = 'Error al conectarse con el servidor';
+                });
+            }
+
+            // Asignar la función al evento submit del formulario
+            document.getElementById('loginForm').addEventListener('submit', enviarLogin);
+        });
+    </script>
+</head>
+
+<body>
+    <div class="formularioLogin">
+        <h1>Inicio de sesión</h1>
+        <form id="loginForm">
+            <div class="username">
+                <input type="text" id="fieldCorreo" required>
+                <label>Correo electrónico</label>
+            </div>
+
+            <div class="username">
+                <input type="password" id="fieldContrasena" required>
+                <label>Contraseña</label>
+            </div>
+
+            <div class="recordar">¿Olvidó su contraseña?</div>
+            <input type="submit" value="Iniciar">
+            <div class="registrarse">
+                Quiero hacer el <a href="index.html">registro</a>
+            </div>
+        </form>
+        <div id="responseMessage"></div>
+    </div>
+</body>
 </html>
