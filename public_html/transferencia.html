@@ -5,58 +5,67 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Transferencias</title>
     <link rel="stylesheet" href="css/transferencia.css">
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            function enviarLogin(event) {
+                event.preventDefault(); // Evita el envío tradicional del formulario
+
+                // Obtener los valores de los campos de entrada
+                const numeroCuenta = document.getElementById('numeroCuenta').value;
+                const saldo = document.getElementById('saldo').value;
+
+                // Crear el objeto JSON
+                const data = {
+                    numeroCuenta: parseInt(numeroCuenta, 10),
+                    saldo: parseInt(saldo, 10)
+                };
+
+                console.log('Datos a enviar:', data);
+
+                // Enviar los datos al servidor usando fetch
+                fetch('http://localhost:8080/consignar', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => {
+                    console.log('Estado de la respuesta:', response.status);
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    console.log('Success:', data);
+                    document.getElementById('result').innerText = data;
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                    document.getElementById('result').innerText = 'Error: ' + error.message;
+                });
+            }
+
+            // Asignar la función al evento submit del formulario
+            document.getElementById('consignarForm').addEventListener('submit', enviarLogin);
+        });
+    </script>
 </head>
 <body>
     <div class="container">
         <h1>Gestión de Transferencias</h1>
-
         <div class="section">
             <h2>Consignar a una Cuenta</h2>
             <form id="consignarForm">
-                <label for="consignarCuenta">Ingrese su # de cuenta:</label>
-                <input type="number" id="consignarCuenta" required>
-
-                <label for="consignarValor">Ingrese el valor que quiere consignar:</label>
-                <input type="number" id="consignarValor" required>
-
+                <label for="numeroCuenta">Ingrese su # de cuenta:</label>
+                <input type="number" id="numeroCuenta" name="numeroCuenta" required>
+                <label for="saldo">Ingrese el valor que quiere consignar:</label>
+                <input type="number" id="saldo" name="saldo" required>
                 <button type="submit">Consignar</button>
             </form>
         </div>
-
-        <div class="section">
-            <h2>Transferir Dinero</h2>
-            <form id="transferirForm">
-                <label for="transferirCuentaOrigen">Ingrese su # de cuenta:</label>
-                <input type="number" id="transferirCuentaOrigen" required>
-
-                <label for="transferirCuentaDestino">Ingrese el número de cuenta al que va a transferir:</label>
-                <input type="number" id="transferirCuentaDestino" required>
-
-                <label for="transferirValor">Valor a transferir:</label>
-                <input type="number" id="transferirValor" required>
-
-                <button type="submit">Transferir</button>
-            </form>
-        </div>
-
         <div id="result"></div>
     </div>
-
-    <script>
-        document.getElementById('consignarForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const cuenta = document.getElementById('consignarCuenta').value;
-            const valor = document.getElementById('consignarValor').value;
-            document.getElementById('result').innerText = `Consignación de $${valor} a la cuenta #${cuenta} realizada con éxito.`;
-        });
-
-        document.getElementById('transferirForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const cuentaOrigen = document.getElementById('transferirCuentaOrigen').value;
-            const cuentaDestino = document.getElementById('transferirCuentaDestino').value;
-            const valor = document.getElementById('transferirValor').value;
-            document.getElementById('result').innerText = `Transferencia de $${valor} de la cuenta #${cuentaOrigen} a la cuenta #${cuentaDestino} realizada con éxito.`;
-        });
-    </script>
 </body>
 </html>
