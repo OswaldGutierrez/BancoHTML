@@ -57,42 +57,6 @@
                             console.error('Error:', error);
                         });
             }
-            
-            function enviarLogin(event) {
-                event.preventDefault(); // Evita el envío tradicional del formulario
-
-                // Obtener los valores de los campos de entrada
-                const correo = document.getElementById('fieldCorreo').value;
-                const contrasena = document.getElementById('fieldContrasena').value;
-
-                // Crear el objeto JSON
-                const data = {
-                    correo: correo,
-                    contrasena: contrasena
-                };
-
-                console.log('Datos a enviar:', data);
-
-                // Enviar los datos al servidor usando fetch
-                fetch('http://localhost:8080/login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
-                })
-                        .then(response => {
-                            console.log('Estado de la respuesta:', response.status);
-                            return response.text();
-                        })
-                        .then(data => {
-                            alert(data);
-                            console.log('Respuesta del servidor:', data);
-                        })
-                        .catch(error => {
-                            console.error('Error:', error);
-                        });
-            }
         </script>
     </head>
 

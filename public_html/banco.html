@@ -1,0 +1,39 @@
+
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Banco</title>
+        <link rel="stylesheet" href="css/banco.css">
+    </head>
+    <body>
+        <div class="container">
+            <h1>Banco PRESTIGIE</h1>
+            <div class="buttons">
+                <button onclick="revisarEstado()">Revisar Estado de la Cuenta</button>
+                <button onclick="verSaldo()">Ver Saldo de la Cuenta</button>
+                <button onclick="window.location.href = 'transferencia.html'">Realizar Transferencia</button>
+                <button onclick="retirarDinero()">Retirar Dinero</button>
+            </div>
+            <div id="result"></div>
+        </div>
+
+        <script>
+            function revisarEstado() {
+                document.getElementById('result').innerText = 'Estado de la cuenta: Activa';
+            }
+
+            function verSaldo() {
+                document.getElementById('result').innerText = 'Saldo de la cuenta: $1,000.00';
+            }
+
+            function realizarConsignacion() {
+                document.getElementById('result').innerText = 'Consignación realizada con éxito.';
+            }
+
+            function retirarDinero() {
+                document.getElementById('result').innerText = 'Retiro realizado con éxito.';
+            }
+        </script>
+    </body>
+</html>
