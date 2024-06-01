@@ -11044,3 +11044,13 @@ html {
 .copyright {
   background-color: #1a252f;
 }
+
+.custom-button {
+    color: darkblue; /* Cambia 'red' por el color que prefieras */
+    border-color: darkblue; /* Si deseas que el borde también cambie de color */
+}
+
+.custom-button:hover {
+    color: white; /* Color del texto al pasar el ratón por encima */
+    background-color: red; /* Fondo al pasar el ratón por encima */
+}

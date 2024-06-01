@@ -1,0 +1,75 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/css.css to edit this template
+*/
+/* 
+    Created on : 31/05/2024, 11:51:30 p. m.
+    Author     : Oswald David
+*/
+
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.header {
+    text-align: center;
+    padding: 10px 0;
+    border-bottom: 2px solid #007bff;
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    margin: 0;
+    color: #007bff;
+}
+
+.header h2 {
+    margin: 0;
+    color: #333;
+    font-weight: normal;
+}
+
+.policy {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-left: 4px solid #007bff;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+}
+
+.policy h3 {
+    margin-top: 0;
+    color: #007bff;
+}
+
+.policy p {
+    margin: 10px 0;
+    color: #333;
+}
+
+.footer {
+    text-align: center;
+    padding: 10px 0;
+    border-top: 2px solid #007bff;
+    margin-top: 20px;
+}
+
+.footer p {
+    margin: 0;
+    color: #666;
+}
