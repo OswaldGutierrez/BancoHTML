@@ -6,8 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>login</title>
-
+        <title>Login</title>
         <link href="css/login.css" rel="stylesheet" />
 
         <script>
@@ -36,24 +35,27 @@
                         },
                         body: JSON.stringify(data)
                     })
-                            .then(response => {
-                                console.log('Estado de la respuesta:', response.status);
-                                return response.text().then(text => {
-                                    return {status: response.status, text: text};
-                                });
-                            })
+                            .then(response => response.json().then(json => {
+                                    return {status: response.status, json: json};
+                                }))
                             .then(response => {
                                 const responseMessage = document.getElementById('responseMessage');
                                 if (response.status === 200) {
                                     responseMessage.style.color = 'green';
-                                    responseMessage.textContent = response.text;
-                                    console.log('Respuesta del servidor:', response.text);
+                                    responseMessage.textContent = 'Ingreso exitoso';
+                                    console.log('Respuesta del servidor:', response.json);
+
+                                    // Almacenar los datos en localStorage o sessionStorage
+                                    localStorage.setItem('numeroCuenta', response.json.numeroCuenta);
+                                    localStorage.setItem('estado', response.json.estado);
+                                    localStorage.setItem('saldo', response.json.saldo);
+
                                     // Redirigir a banco.html
                                     window.location.href = 'banco.html';
                                 } else {
                                     responseMessage.style.color = 'red';
-                                    responseMessage.textContent = response.text;
-                                    console.log('Respuesta del servidor:', response.text);
+                                    responseMessage.textContent = response.json.mensaje || 'Error en el ingreso';
+                                    console.log('Respuesta del servidor:', response.json);
                                 }
                             })
                             .catch(error => {
@@ -69,7 +71,6 @@
             });
         </script>
     </head>
-
     <body>
         <div class="formularioLogin">
             <h1>Inicio de sesión</h1>
