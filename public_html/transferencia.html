@@ -16,8 +16,9 @@
                 <form id="consignarForm" action="http://localhost:8080/consignar" method="POST">
                     <label for="numeroCuenta">Ingrese su # de cuenta:</label>
                     <input type="number" id="numeroCuenta" name="numeroCuenta" required>
+                    
                     <label for="saldo">Ingrese el valor que quiere consignar:</label>
-                    <input type="number" id="saldo" name="saldo" required>
+                    <input type="number" id="saldo" name="saldo" step="any" required>
 
                     <button type="submit">Consignar</button>
                 </form>
@@ -29,8 +30,9 @@
                 <form id="retirarForm" action="http://localhost:8080/retirar" method="POST">
                     <label for="numeroCuentaRetirar">Ingrese su # de cuenta:</label>
                     <input type="number" id="numeroCuentaRetirar" name="numeroCuentaRetirar" required>
+                    
                     <label for="saldoRetirar">Ingrese el dinero que quiere retirar:</label>
-                    <input type="number" id="saldoRetirar" name="saldoRetirar" required>
+                    <input type="number" id="saldoRetirar" name="saldoRetirar" step="any" required>
                     
                     <button type="submit">Retirar</button>
                 </form>
