@@ -1,13 +1,6 @@
-/*
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/css.css to edit this template
-*/
-/* 
-    Created on : 31/05/2024, 1:21:17 a. m.
-    Author     : Oswald David
-*/
-
 /* transferencias.css */
+
+/* Estilos originales mantenidos */
 
 body {
     font-family: Arial, sans-serif;
@@ -99,4 +92,33 @@ button:active {
     color: #333;
 }
 
+/* Nuevos estilos para la sección intro-message */
 
+.intro-message {
+    background-color: #ffd8b7;
+    border: 1px solid #ffa07a;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.intro-message p {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.intro-message button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #ff7f50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+.intro-message button:hover {
+    background-color: #ff4500;
+}

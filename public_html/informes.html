@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <title>Informes</title>
+        <link rel="stylesheet" href="css/informes.css">
+    </head>
+    <body>
+        <div class="container">
+            <h1>Buscar Informes por Mes</h1>
+            <form id="searchForm">
+                <label for="mes">Buscar por meses:</label>
+                <select id="mes" name="mes">
+                    <option value="enero">Enero 2024</option>
+                    <option value="febrero">Febrero 2024</option>
+                    <option value="marzo">Marzo 2024</option>
+                    <option value="abril">Abril 2024</option>
+                    <option value="mayo">Mayo 2024</option>
+                    <option value="junio">Junio 2024</option>
+                </select>
+                <button type="submit">Buscar</button>
+            </form>
+
+            <div id="resultContainer">
+                <h2>Resultados</h2>
+                <div id="results"></div>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                document.getElementById('searchForm').addEventListener('submit', function (event) {
+                    event.preventDefault();
+
+                    const mes = document.getElementById('mes').value;
+
+                    fetch(`http://localhost:8080/clientes?mes=${mes}`, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error(`Error ${response.status}: ${response.statusText}`);
+                                }
+                                return response.json();
+                            })
+                            .then(data => {
+                                const resultsDiv = document.getElementById('results');
+                                resultsDiv.innerHTML = ''; // Limpiamos resultados anteriores
+
+                                if (data.length === 0) {
+                                    resultsDiv.innerHTML = '<p>No hay transacciones para este mes.</p>';
+                                } else {
+                                    let totalIds = 0;
+                                    const table = document.createElement('table');
+                                    table.innerHTML = `
+                    <tr>
+                        <th>ID</th>
+                        <th>ID del cliente</th>
+                        <th>Valor</th>
+                        <th>Fecha</th>
+                        <th>Tipo</th>
+                    </tr>
+                `;
+
+                                    data.forEach(transaccion => {
+                                        if (transaccion.hasOwnProperty('totalIds')) {
+                                            totalIds = transaccion.totalIds;
+                                        } else {
+                                            const row = document.createElement('tr');
+                                            row.innerHTML = `
+                            <td>${transaccion.id}</td>
+                            <td>${transaccion.clienteId}</td>
+                            <td>${transaccion.valorConsignacion}</td>
+                            <td>${transaccion.fecha}</td>
+                            <td>${transaccion.tipo}</td>
+                        `;
+                                            table.appendChild(row);
+                                        }
+                                    });
+
+                                    resultsDiv.innerHTML = `<p>Total de ids: ${totalIds}</p>`;
+                                    resultsDiv.appendChild(table);
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error al buscar transacciones:', error.message);
+                                const resultsDiv = document.getElementById('results');
+                                resultsDiv.innerHTML = `<p>Error al buscar transacciones: ${error.message}</p>`;
+                            });
+                });
+            });
+
+
+
+        </script>
+    </body>
+</html>
+

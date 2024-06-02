@@ -5,18 +5,22 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Transferencias</title>
         <link rel="stylesheet" href="css/transferencia.css">
-
     </head>
     <body>
         <div class="container">
             <h1>Gestión de Transferencias</h1>
+
+            <div class="intro-message">
+                <p>Si usted trabaja en dólares o en euros, utilice esta página para hacer el cambio a pesos.</p>
+                <button onclick="window.location.href = 'divisas.html'">Cambiar a Pesos</button>
+            </div>
 
             <div class="section consignar-section">
                 <h2>Consignar a una Cuenta</h2>
                 <form id="consignarForm" action="http://localhost:8080/consignar" method="POST">
                     <label for="numeroCuenta">Ingrese su # de cuenta:</label>
                     <input type="number" id="numeroCuenta" name="numeroCuenta" required>
-                    
+
                     <label for="saldo">Ingrese el valor que quiere consignar:</label>
                     <input type="number" id="saldo" name="saldo" step="any" required>
 
@@ -24,16 +28,16 @@
                 </form>
             </div>
             <div id="result"></div>
-            
+
             <div class="section retirar-section">
                 <h2>Retirar dinero</h2>
                 <form id="retirarForm" action="http://localhost:8080/retirar" method="POST">
                     <label for="numeroCuentaRetirar">Ingrese su # de cuenta:</label>
                     <input type="number" id="numeroCuentaRetirar" name="numeroCuentaRetirar" required>
-                    
+
                     <label for="saldoRetirar">Ingrese el dinero que quiere retirar:</label>
                     <input type="number" id="saldoRetirar" name="saldoRetirar" step="any" required>
-                    
+
                     <button type="submit">Retirar</button>
                 </form>
             </div>
@@ -41,7 +45,13 @@
         </div>
 
         <script>
-            document.addEventListener('DOMContentLoaded', (event) => {
+            document.addEventListener('DOMContentLoaded', () => {
+                const cambioButton = document.getElementById('cambioButton');
+
+                cambioButton.addEventListener('click', () => {
+                    alert('¡Cambio a pesos!');
+                    // Aquí puedes agregar la lógica para cambiar a pesos si lo necesitas
+                });
 
                 function enviarLogin(event) {
                     event.preventDefault();
@@ -83,11 +93,8 @@
                 }
 
                 document.getElementById('consignarForm').addEventListener('submit', enviarLogin);
-            });
-            
-            
-            
-            document.addEventListener('DOMContentLoaded', (event) => {
+
+
 
                 function enviarLoginRetirar(event) {
                     event.preventDefault();
